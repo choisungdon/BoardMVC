@@ -9,8 +9,26 @@
 </head>
 <body>
 	<a href="/board/write">글 등록</a>
+	<table>
+		<tr>
+			<th>No</th>
+			<th>제목</th>
+			<th>날짜</th>
+		</tr>
 	<c:forEach items="${data}" var="item">
-		<div>${item.title }</div>
+		<tr onclick="moveToDeTail(${item.i_board })">
+			<td>${item.i_board }</td>
+			<td>${item.title }</td>
+			<td>${item.r_dt }</td>
+		</tr>
 	</c:forEach>
+		
+	</table>
+	
+	<script>
+		function moveToDeTail(i_board){
+			location.href="/board/detail?i_board="+i_board;
+		}
+	</script>
 </body>
 </html>

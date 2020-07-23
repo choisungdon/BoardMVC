@@ -7,7 +7,7 @@
 <title>Write</title>
 </head>
 <body>
-	<form action="/board/write" method="post">
+	<form action="/board/write" method="post"> <!-- /board/write 맨 앞에 / 붙여야됩니다.  -->
 		<div> 제목 :<input type="text" name="title"></div>
 		<div> 내용 :<textarea name="ctnt"></textarea></div>
 		<div><input type="submit" value="등록"></div>

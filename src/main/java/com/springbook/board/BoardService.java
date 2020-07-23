@@ -11,8 +11,24 @@ public class BoardService {
 	@Autowired
 	private BoardMapper mapper;
 	
-	public List<BoardVO> getBoardList() {
-		return mapper.getBoardList();
+	public int insBoard(BoardVO param) {
+		return mapper.insBoard(param);
 	}
+	public List<BoardVO> selBoardList() {
+		return mapper.selBoardList();
+	}
+	
+	public BoardVO selBoard(BoardVO param){
+		return mapper.selBoard(param);
+	}
+	
+	public int delBoard(int param) {
+		return mapper.delBoard(param);
+	}
+	
+	public int updBoard(BoardVO param) {
+		return mapper.updBoard(param);
+	}
+	
 
 }
