@@ -59,7 +59,7 @@ public class BoardController {
 		//System.out.println("i_board ="+ param.getI_board());
 		
 		model.addAttribute("data",service.selBoard(param));
-		return "board/upd";
+		return "board/write";
 	}
 	
 	@RequestMapping(value = "/upd", method = RequestMethod.POST)
