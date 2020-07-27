@@ -10,7 +10,7 @@
 	<div>로그인</div>
 	<div>${msg}</div>
 	<div>
-		<form id="frm" action="/user/lgoinPost" method="post">
+		<form id="frm" action="/user/loginPost" method="post">
 			<div>
 				<input type="text" name="cid" placeholder="ID" value="${writedCid }">
 			</div>

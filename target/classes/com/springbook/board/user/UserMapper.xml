@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.springbook.board.user.UserMapper">
+<mapper namespace="com.springbook.board.user.UserMapper"><!-- com.springbook.board.user.UserMappe -> mapper 찾아서 interface를 가지고 우리가 아는 dao를 만든다. -->
 	
 	<insert id="join" parameterType="com.springbook.board.user.UserVO">
-			INSERT INTO T_USER(CID,CPW,NM,CADDR)
-			VALUES(#{cid},#{cpw},#{nm},#{caddr})
+			INSERT INTO T_USER(CID,CPW,salt,NM,CADDR)
+			VALUES(#{cid},#{cpw},#{salt},#{nm},#{caddr})
 	</insert>
+	
+	<select id="login" parameterType="com.springbook.board.user.UserVO"
+		resultType="com.springbook.board.user.UserVO">
+		SELECT I_USER, CID, CPW, SALT, NM, CADDR
+		FROM T_USER
+		WHERE CID= #{cid}
+	</select>
+	
 
 </mapper>

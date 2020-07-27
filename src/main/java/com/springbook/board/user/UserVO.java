@@ -4,16 +4,25 @@ public class UserVO {
 	private int i_user;
 	private String cid;
 	private String cpw;
-	private String rcpw;
+	private String salt;
+	private String recpw;
 	private String nm;
 	private String caddr;
 	private String r_dt;
 	
-	public String getRcpw() {
-		return rcpw;
+	
+	
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	public String getRecpw() {
+		return recpw;
 	}
 	public void setRcpw(String rcpw) {
-		this.rcpw = rcpw;
+		this.recpw = rcpw;
 	}
 	
 	public int getI_user() {
