@@ -8,10 +8,25 @@ public class UserVO {
 	private String recpw;
 	private String nm;
 	private String caddr;
+	private String ph;
 	private String r_dt;
+	private String phAuthNumber;
 	
 	
 	
+	
+	public String getPhAuthNumber() {
+		return phAuthNumber;
+	}
+	public void setPhAuthNumber(String phAuthNumber) {
+		this.phAuthNumber = phAuthNumber;
+	}
+	public String getPh() {
+		return ph;
+	}
+	public void setPh(String ph) {
+		this.ph = ph;
+	}
 	public String getSalt() {
 		return salt;
 	}

@@ -4,8 +4,8 @@
 <mapper namespace="com.springbook.board.user.UserMapper"><!-- com.springbook.board.user.UserMappe -> mapper 찾아서 interface를 가지고 우리가 아는 dao를 만든다. -->
 	
 	<insert id="join" parameterType="com.springbook.board.user.UserVO">
-			INSERT INTO T_USER(CID,CPW,salt,NM,CADDR)
-			VALUES(#{cid},#{cpw},#{salt},#{nm},#{caddr})
+			INSERT INTO T_USER(CID,CPW,salt,NM,CADDR, PH)
+			VALUES(#{cid},#{cpw},#{salt},#{nm},#{caddr},#{ph})
 	</insert>
 	
 	<select id="login" parameterType="com.springbook.board.user.UserVO"
