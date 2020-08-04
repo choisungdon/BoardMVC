@@ -5,7 +5,29 @@ public class BoardVO {
 	private String title;
 	private String ctnt;
 	private String r_dt;
+	private int sidx;
+	private int count;
+	private String serchText;
 	
+	
+	public String getSerchText() {
+		return serchText;
+	}
+	public void setSerchText(String serchText) {
+		this.serchText = serchText;
+	}
+	public int getSidx() {
+		return sidx;
+	}
+	public void setSidx(int sidx) {
+		this.sidx = sidx;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getI_board() {
 		return i_board;
 	}
