@@ -7,14 +7,14 @@ public class BoardVO {
 	private String r_dt;
 	private int sidx;
 	private int count;
-	private String serchText;
+	private String searchText;
 	
 	
-	public String getSerchText() {
-		return serchText;
+	public String getSearchText() {
+		return searchText;
 	}
-	public void setSerchText(String serchText) {
-		this.serchText = serchText;
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
 	}
 	public int getSidx() {
 		return sidx;

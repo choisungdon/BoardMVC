@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <title>list</title>
+<style>
+	.hoverSelected:hover{
+		background-color: #ecf0f1;
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 	<div>
@@ -14,18 +20,33 @@
 	</div>
 
 	<a href="/board/write">글 등록</a>
-	<table id="contentTable">
+	<div>
+		검색 : <input type="search" id="searchText"> <button onclick="search(searchText)">검색 </button></input>
+	</div>
+	<table >
 		<tr>
 			<th>No</th>
 			<th>제목</th>
 			<th>날짜</th>
 		</tr>
+		<tbody id="contentTable">
 		
+		</tbody>
 	</table>
 
 	<script>
-	function moveToDetail(i_board) {
-		location.href = '/board/detail?i_board=' + i_board
+	
+	function search(searchText){
+		if(searchText.value ==''){
+			alert('검색어를 입력해 주세요.');
+			searchText.focus();
+			return ;
+		}
+		var ele = document.querySelector('#contentTable');
+		ele.innerHTML = '';
+		page = 1;
+		glovalSearchText =searchText.value;
+		getBoardData(page,glovalSearchText);
 	}
 	
 	function addRows(res) {
@@ -44,24 +65,44 @@
 			tr.appendChild(td1)
 			tr.appendChild(td2)
 			tr.appendChild(td3)
-		
+			
+			tr.addEventListener('click', function(){
+				location.href = `/board/detail?i_board=\${item.i_board}`
+			})
+			tr.classList.add("hoverSelected");
 			var ele = document.querySelector('#contentTable')					
 			ele.appendChild(tr)
 		})
 	}
 			
-	function getBoardData(page) {
+	function getBoardData(page,searchText) {
 		axios.get('/board/getListData', {
 			params: {
-				page: page
+				page: page,
+				searchText: searchText
 			}
 		}).then(function (res) {
+			if(res.data.result.length < 60){
+				isBreak = true;
+			}
 			addRows(res)
 		})
 	}
 	
-	var page = 1
-	getBoardData(page)
+	var isBreak = false;
+	var page = 1;
+	var glovalSearchText = '';
+	getBoardData(page,glovalSearchText);
+	
+	window.addEventListener('scroll', function() {
+		if(isBreak) {
+			return
+		}
+		if(window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+		
+			getBoardData(++page,glovalSearchText)	
+		}
+	})
 	
 	</script>
 </body>
