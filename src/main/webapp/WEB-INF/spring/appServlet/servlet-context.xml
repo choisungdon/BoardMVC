@@ -50,4 +50,16 @@
 	
 	<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/*"/>
+			<beans:bean class="com.springbook.board.common.CheckInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
+	
+	
+	
+	
+	
 </beans:beans>

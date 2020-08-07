@@ -18,7 +18,7 @@
 	<div>
 		${loginUser.nm } 환영 합니다. <a href="/user/logout"><button>로그아웃</button></a>
 	</div>
-
+	<a href="/user/profile"><button>프로필</button></a>
 	<a href="/board/write">글 등록</a>
 	<div>
 		검색 : <input type="search" id="searchText"> <button onclick="search(searchText)">검색 </button></input>

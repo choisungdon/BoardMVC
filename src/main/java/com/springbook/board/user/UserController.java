@@ -1,36 +1,26 @@
 package com.springbook.board.user;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.springbook.board.common.Const;
-import com.springbook.board.common.KakaAuth;
-import com.springbook.board.common.KakaoUserInfo;
+
 import com.springbook.board.common.MyUtils;
 
 @Controller
@@ -136,11 +126,23 @@ public class UserController {
 			return "redirect:/board/list";
 		
 		}
+		@RequestMapping(value = "/profile", method = RequestMethod.GET)
+		public String profile(Model model) {
+			return "/user/profile";
+		}
+		
+		@RequestMapping(value = "/profile", method = RequestMethod.POST)
+		public String profile(@RequestParam("uploadProfile") MultipartFile uploadProfile) {
+			System.out.println("uploadProfile : "+uploadProfile);
+			return "/user/profile";
+		}
 		
 		@RequestMapping(value="/logout", method=RequestMethod.GET)
 		public String logout(HttpSession hs) {
 			hs.invalidate();
 			return "redirect:/user/login";
 		}
+		
+		
 		
 }
