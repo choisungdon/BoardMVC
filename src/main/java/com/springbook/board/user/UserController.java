@@ -1,35 +1,26 @@
 package com.springbook.board.user;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.springbook.board.common.Const;
-import com.springbook.board.common.KakaAuth;
+
 import com.springbook.board.common.MyUtils;
 
 @Controller
@@ -52,64 +43,7 @@ public class UserController {
 		return "user/join";
 	}
 
-	// 카카오 로그인
-	@RequestMapping(value = "/loginKAKAO", method = RequestMethod.GET)
-	public String loginKAKAO() {
-		String uri = String.format(
-				"redirect:https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code",
-				Const.KAKAO_CLIENT_ID, Const.KAKAO_AUTH_REDIRECT_URI);
-		return uri;
-	}
-
-	@RequestMapping(value="/joinKakao", method=RequestMethod.GET)
-	public String joinKAKAO(@RequestParam(required=false) String code,
-			@RequestParam(required=false) String error) {
-		
-		System.out.println("code : " + code);
-		System.out.println("error : " + error);
-		
-		if(code == null) {
-			return "redirect:/user/login";
-		}
-		
-		HttpHeaders headers = new HttpHeaders();
-		
-		Charset utf8 = Charset.forName("UTF-8"); // meta 정보 주기 
-		MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON, utf8);		
-		headers.setAccept(Arrays.asList(mediaType));
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);	
-		
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>(); // parameter 데이터 주기 
-		map.add("grant_type", "authorization_code");
-		map.add("client_id", Const.KAKAO_CLIENT_ID);
-		map.add("redirect_uri", Const.KAKAO_TOKEN_REDIRECT_URI);
-		map.add("code", code);
-		
-		HttpEntity<LinkedMultiValueMap<String, String>> entity = new HttpEntity(map,headers); // Entity 계체	 ->> 통신 부분	
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> respEntity 
-		= restTemplate.exchange(Const.KAKAO_ACCESS_TOKEN_HOST, HttpMethod.POST, entity, String.class);
-		
-		
-		String result = respEntity.getBody();
-		System.out.println("result : "+result);
-		
-		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		
-		try {
-			KakaAuth auth = om.readValue(result, KakaAuth.class);
-			//System.out.println("auth : "+ auth.toString());
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "redirect:/user/login";
 	
-	}
 	
 	@RequestMapping(value = "/joinPost", method = RequestMethod.POST)
 	public String join(UserVO param, RedirectAttributes ra, HttpSession hs) {
@@ -164,4 +98,51 @@ public class UserController {
 
 		return map;
 	}
+	
+	
+	// 카카오 로그인 인증 코드 받기(요청) 
+		@RequestMapping(value = "/loginKAKAO", method = RequestMethod.GET)
+		public String loginKAKAO() {
+			String uri = String.format(
+					"redirect:https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code",
+					Const.KAKAO_CLIENT_ID, Const.KAKAO_AUTH_REDIRECT_URI);
+			return uri;
+		}
+			
+		// 인증코드 받기 (응답)
+		@RequestMapping(value="/joinKakao", method=RequestMethod.GET)
+		public String joinKAKAO(@RequestParam(required=false) String code,
+				@RequestParam(required=false) String error, HttpSession hs) {
+			
+			System.out.println("code : " + code); // 인증코드 
+			System.out.println("error : " + error);
+			
+			if(code == null) {
+				return "redirect:/user/login";
+			}
+			
+			int result = service.kakaoLogin(code, hs);
+			
+			return "redirect:/board/list";
+		
+		}
+		@RequestMapping(value = "/profile", method = RequestMethod.GET)
+		public String profile(Model model) {
+			return "/user/profile";
+		}
+		
+		@RequestMapping(value = "/profile", method = RequestMethod.POST)
+		public String profile(@RequestParam("uploadProfile") MultipartFile uploadProfile) {
+			System.out.println("uploadProfile : "+uploadProfile);
+			return "/user/profile";
+		}
+		
+		@RequestMapping(value="/logout", method=RequestMethod.GET)
+		public String logout(HttpSession hs) {
+			hs.invalidate();
+			return "redirect:/user/login";
+		}
+		
+		
+		
 }

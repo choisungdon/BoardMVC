@@ -7,6 +7,7 @@ public class KakaAuth {
 	private int expires_in;
 	private int refresh_token_expires_in;
 	
+	
 	@Override
 	public String toString() {
 		return "access_token :"+access_token+" refresh_token : "+refresh_token+" expires_in :"+expires_in+" refresh_token_expires_in : "+refresh_token_expires_in;

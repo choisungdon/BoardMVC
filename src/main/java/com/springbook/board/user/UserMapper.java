@@ -10,4 +10,6 @@ public interface UserMapper {
 	public int join(UserVO param);
 	
 	public UserVO login(UserVO param);
+	
+	
 }

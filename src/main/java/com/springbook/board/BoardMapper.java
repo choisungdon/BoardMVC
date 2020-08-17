@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BoardMapper {
 	public int insBoard(BoardVO param);
 	
-	public List<BoardVO> selBoardList();
+	public List<BoardVO> selBoardList(BoardVO param);
 	
 	public BoardVO selBoard(BoardVO param);
 	
