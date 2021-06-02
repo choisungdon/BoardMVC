@@ -93,8 +93,7 @@ public class UserService {
 		
 		HttpEntity<LinkedMultiValueMap<String, String>> entity = new HttpEntity(map,headers); // Entity 계체	 ->> 통신 부분	
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> respEntity 
-		= restTemplate.exchange(Const.KAKAO_ACCESS_TOKEN_HOST, HttpMethod.POST, entity, String.class);
+		ResponseEntity<String> respEntity = restTemplate.exchange(Const.KAKAO_ACCESS_TOKEN_HOST, HttpMethod.POST, entity, String.class);
 		
 		
 		String result = respEntity.getBody();

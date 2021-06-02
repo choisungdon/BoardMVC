@@ -117,11 +117,11 @@ public class UserController {
 			System.out.println("code : " + code); // 인증코드 
 			System.out.println("error : " + error);
 			
-			if(code == null) {
+			if(code == null) { // 인증코드 (토큰) 없으면 로그인 화면으로
 				return "redirect:/user/login";
 			}
 			
-			int result = service.kakaoLogin(code, hs);
+			int result = service.kakaoLogin(code, hs); // 로그인 정보 저장 
 			
 			return "redirect:/board/list";
 		

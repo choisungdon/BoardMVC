@@ -23,7 +23,7 @@
 			<div>
 				<a href="/user/join">회원 가입</a>
 			</div>
-			<div><a href="/user/loginKAKAO">카카오톡 로그인</a></div>
+			<div><a href="/board/user/loginKAKAO">카카오톡 로그인</a></div>
 		</form>
 	</div>
 </body>
